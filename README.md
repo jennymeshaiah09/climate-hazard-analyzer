@@ -126,24 +126,34 @@ Optional bbox fields `north`, `south`, `east`, `west` — analysis runs at the b
 
 ## Deploy
 
+Repo: https://github.com/jennymeshaiah09/climate-hazard-analyzer
+
 ### Backend (Render)
 
-1. Push this repo to GitHub.
-2. Create a **Web Service** from `backend/` (or use `render.yaml`).
-3. Set env vars: `MONGODB_URI`, `CORS_ORIGINS` (your Vercel URL), `MONGODB_DB=climate_hazard`.
-4. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+1. New **Web Service** → connect this GitHub repo.
+2. Build: `pip install -r backend/requirements.txt`
+3. Start: `cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. Env vars:
+   - `MONGODB_URI` — Atlas connection string (optional; in-memory cache is used if Mongo is unreachable)
+   - `MONGODB_DB=climate_hazard`
+   - `CORS_ORIGINS` — your Vercel origin (or `*` for a quick demo)
+   - `PYTHON_VERSION=3.12.8`
+5. Or apply [`render.yaml`](render.yaml) as a Blueprint.
 
 ### Frontend (Vercel)
 
 1. Import the repo; set **Root Directory** to `frontend`.
-2. Build: `npm run build`, output: `dist`.
+2. Framework preset: Vite. Build: `npm run build`, output: `dist`.
 3. Env: `VITE_API_URL=https://<your-render-service>.onrender.com`
+4. After deploy, set Render `CORS_ORIGINS` to the Vercel URL and redeploy the API.
 
 ### MongoDB Atlas
 
 1. Create a free cluster and database user.
 2. Allow network access from Render (`0.0.0.0/0` is typical on free tier).
 3. Paste the connection string into `MONGODB_URI`.
+
+**Deployed URLs:** add your Render API URL and Vercel app URL here after you create the services in the dashboards.
 
 ## What I would improve with more time
 
